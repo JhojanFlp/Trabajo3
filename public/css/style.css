@@ -1,0 +1,27 @@
+body {
+	font-family: 'Titillium Web', sans-serif;
+}
+
+.navbar {
+	box-shadow: 2px 2px 5px #000;
+	opacity: .9;
+}
+
+.navbar .nav-item .nav-link {
+	color: #fff;
+}
+
+header {
+	margin-top: 75px;
+}
+
+#section, #header-s {
+	background: #f1f1f1;
+	padding: 50px 0 30px 0;
+	text-align: center;
+	margin-top: 40px;
+}
+
+footer {
+	background: #424242;
+}

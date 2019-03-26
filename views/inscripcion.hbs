@@ -1,0 +1,52 @@
+{{>head}}
+
+{{>navigation}}
+
+<header id="header">
+	<div class="container mt-5">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="header-content-left">
+					<img src="img/student.jpg" style="width: 100%">
+				</div>
+			</div>
+			<div class="col-md-6">
+				<!-- Form -->
+				<div class="section">
+					<div class="container">
+						<div class="row justify-content-center">
+							<div class="col-md-6">
+								<div class="header-content-right">
+									<form action="/inscAspirante" method="POST" class="card my-2">
+										<div class="card-body">
+											<div class="form-group">
+												<input type="number" placeholder="Identificación" class="form-control" name="id" required>
+											</div>
+											<div class="form-group">
+												<input type="text" placeholder="Name" class="form-control" name="name" required>
+											</div>
+											<div class="form-group">
+												<input type="text" placeholder="Email" class="form-control" name="email" required>
+											</div>
+											<div class="form-group">
+												<input type="text" placeholder="Teléfono" class="form-control" name="tel" required>
+											</div>
+											<div class="form-group">
+												<input type="number" placeholder="Id del curso" class="form-control" name="c" required>
+											</div>
+											<button type="submit" class="btn btn-outline-primary btn-block">
+												Enviar
+											</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+
+{{>footer}}

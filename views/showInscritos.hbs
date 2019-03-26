@@ -1,0 +1,41 @@
+{{>head}}
+
+{{>navigation}}
+
+<header id="header-s">
+	<div class="section">
+		<div class="container-mt-5">
+			<div class="row justify-content-center">
+				<p class="h2 mt-2 mb-2">
+					Listado de inscritos:
+				</p>
+			</div>
+			<div class="row justify-content-center">
+				{{{listarAspirantes}}}
+			</div>
+		</div>
+	</div>
+</header>
+
+<!-- Form -->
+<section id="section">
+	<div class="container">
+		<div class="row justify-content-center">
+			<form action="/estado" method="POST" class="card my-2">
+				<div class="card-body">
+					<div class="form-group">
+						<p class="h2 mt-2 mb-2">
+							Digite el ID del curso para cambiar su estado
+						</p>
+						<input type="number" placeholder="ID del curso" class="form-control" name="id" required>
+					</div>
+					<button type="submit" class="btn btn-outline-success btn-block">
+						Enviar
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</section>
+
+{{>footer}}
