@@ -10,7 +10,7 @@ npm i
 
 ## Instrucciones
 
-Estando en la página de inicio, dar click a cualquier funcionalidad. Estas están en forma de botones en la parte inferior, o en la barra de navegación.
+Estando en la página de inicio, dar click a cualquier funcionalidad, y se pueden encontrar en forma de botones en la parte inferior, o en la barra de navegación.
 
 1. En cursos disponibles, se le muestra al interesado los cursos en los que se puede inscribir actualmente. Si da click en alguno de ellos, se le mostrará la información más detallada.
 
