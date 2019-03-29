@@ -1,5 +1,7 @@
 const hbs = require('hbs');
-const funciones = require('./funciones')
+const funciones = require('./funciones');
+
+hbs.registerHelper('createJson', () => funciones.initJson());
 
 hbs.registerHelper('createCourse', (name, id, desc, valor, mod, int, est) =>
 	funciones.crearC({name, id, desc, valor, mod, int, est}));
