@@ -53,7 +53,7 @@ hbs.registerHelper('deleteAsp', (idA, idC) =>
 hbs.registerHelper('listarAspCurso', (idC) => {
 	try {
 		listA = require('../ListA.json');
-		listC = require('../ListC.json')
+		listC = require('../ListC.json');
 	} catch(err) {
 		listA = [];
 		listC = [];
