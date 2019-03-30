@@ -53,13 +53,17 @@ hbs.registerHelper('deleteAsp', (idA, idC) =>
 hbs.registerHelper('listarAspCurso', (idC) => {
 	try {
 		listA = require('../ListA.json');
+		listC = require('../ListC.json')
 	} catch(err) {
 		listA = [];
+		listC = [];
 		funciones.initJson();
 	}
-	asp = listA.filter(a => a.curso.id == idC);
+
+	c = listC.find(cu => cu.id == idC);
 	let txt = '<h1 class="display-4">No hay un curso con ese ID</h1>';
-	if(asp.length > 0){
+	if(c){
+		asp = listA.filter(a => a.curso.id == idC);
 		txt = 
 			`
 			<table class="table table-striped">
@@ -72,7 +76,8 @@ hbs.registerHelper('listarAspCurso', (idC) => {
 				</thead>
 				<tbody>
 			`
-		asp.forEach((a, index) => {
+		if (asp.length > 0) {
+			asp.forEach((a, index) => {
 			txt += 
 			`
 			<tr>
@@ -81,7 +86,18 @@ hbs.registerHelper('listarAspCurso', (idC) => {
 				<td>${a.id}</td>
 			</tr>
 			`
-		});
+			});
+		} else {
+			txt += 
+			`
+			<tr>
+				<th scope="row">Error:</td>
+				<td>504</td>
+				<td>No hay aspirantes para este curso</td>
+			</tr>
+			`
+		}
+		
 		txt += 
 			`			</tbdody>
 					</table>
