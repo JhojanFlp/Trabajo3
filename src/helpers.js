@@ -145,6 +145,7 @@ hbs.registerHelper('listarAspirantes', () => {
 									<th scope="col">#</th>
 								    <th scope="col">Nombre</th>
 								    <th scope="col">Identificación</th>
+								    <th scope="col">Eliminar</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -156,11 +157,21 @@ hbs.registerHelper('listarAspirantes', () => {
 						<th scope="row">${index + 1}</th>
 						<td>${a.name}</td>
 						<td>${a.id}</td>
+						<td>
+							<form action="/delAsp" method="POST">
+								<div class="form-group">
+									<input type="hidden" name="idC" value=${c.id}>
+									<button type="submit" class="btn btn-outline-danger" name="idA" value=${a.id}>
+							    		Eliminar
+							    	</button>
+							    </div>
+							</form>
+						</td>
 					</tr>
 					`
 				});
 				txt += 
-					`			</tbdody>
+					`			</tbody>
 							</table>
 						</div>
 					</div>
