@@ -12,7 +12,19 @@
 			</div>
 			<div class="col-md-6">
 				<div class="header-content-right">
-					<h1 class="display-4">{{cambiarEstado idC}}.</h1>
+					{{#if msj}}
+						<div class="alert alert-success" role="alert">
+							<div class="row justify-content-center">
+								{{msj}}
+							</div>
+						</div>
+					{{else}}
+						<div class="alert alert-danger" role="alert">
+							<div class="row justify-content-center">
+								{{e}}
+							</div>
+						</div>
+					{{/if}}
 					<p class="mt-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus reprehenderit porro totam nemo, neque id architecto perspiciatis illum in molestiae hic doloribus ipsam omnis qui optio laudantium sit, dolores ratione.
 					</p>
 				</div>

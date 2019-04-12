@@ -1,0 +1,38 @@
+{{>head}}
+
+	{{>navigation}}
+	<!-- HEADER -->
+	<header id="header">
+		<div class="container mt-5">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="header-content-left">
+						<img src="img/student.jpg" style="width: 65%">
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="header-content-right">
+						<h1 class="display-4">Validación de usuario.</h1>
+						<p class="mt-5">
+							Estamos validando su usuario. Este proceso solo tarde unos pocos
+							segundos, espere por favor...
+						</p>
+						{{#if r1}}
+							<div class="alert alert-success" role="alert">
+								{{r1}}
+							</div>
+							<div class="alert alert-primary" role="alert">
+								{{r2}}
+							</div>
+						{{else}}
+							<div class="alert alert-danger" role="alert">
+								{{e}}
+							</div>
+						{{/if}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+{{>footer}}

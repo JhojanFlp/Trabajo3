@@ -11,14 +11,21 @@
 				</p>
 			</div>
 			<div class="row justify-content-center">
-				{{{listarAspirantes}}}
+				{{{listarAspirantes listC listA}}}
+				{{#if msj}}
+					<div class="alert alert-danger" role="alert">
+						<div class="row justify-content-center">
+							<h3>{{msj}}</h3>
+						</div>
+					</div>
+				{{/if}}
 			</div>
 		</div>
 	</div>
 </header>
 
 <!-- Form -->
-<section id="section">
+{{!-- <section id="section">
 	<div class="container">
 		<div class="row justify-content-center">
 			<form action="/estado" method="POST" class="card my-2">
@@ -36,6 +43,6 @@
 			</form>
 		</div>
 	</div>
-</section>
+</section> --}}
 
 {{>footer}}
