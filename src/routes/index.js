@@ -200,10 +200,10 @@ app.post('/inscripcion', (req, res) => {
 	});
 });
 
-app.get('/showinscritos', (req, res) => {
+app.get('/showInscritos', (req, res) => {
 	Curso.find({est: "disponible"}).exec((e, cursos) => {
 		if(e){
-			return res.render('showinscritos', {
+			return res.render('showInscritos', {
 				listC: [],
 				listA: [],
 				msj: "Error en la búsqueda de cursos"
@@ -212,14 +212,14 @@ app.get('/showinscritos', (req, res) => {
 		else {
 			Aspirante.find({}).exec((e, asp) => {
 				if(e){
-					return res.render('showinscritos', {
+					return res.render('showInscritos', {
 						listC: cursos,
 						listA: [],
 						msj: "Error en la búsqueda de aspirantes"
 					});
 				}
 				else {
-					res.render('showinscritos', {
+					res.render('showInscritos', {
 						listC: cursos,
 						listA: asp
 					});
