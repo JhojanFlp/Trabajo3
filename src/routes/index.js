@@ -109,7 +109,7 @@ app.post('/createC', (req, res) => {
 		valor: parseFloat(req.body.valor),
 		mod: req.body.modalidad,
 		int: req.body.intensidad,
-		est: "disponible"
+		est: "Disponible"
 	});
 
 	Curso.find({id: curso.id}).exec((e, c) => {
@@ -137,7 +137,7 @@ app.post('/createC', (req, res) => {
 });
 
 app.get('/cursos' , (req, res) => {
-	Curso.find({est: "disponible"}).exec((e, cursos) => {
+	Curso.find({est: "Disponible"}).exec((e, cursos) => {
 		if(e){
 			return res.render('cursos', {
 				listC: [],
@@ -201,7 +201,7 @@ app.post('/inscripcion', (req, res) => {
 });
 
 app.get('/showInscritos', (req, res) => {
-	Curso.find({est: "disponible"}).exec((e, cursos) => {
+	Curso.find({est: "Disponible"}).exec((e, cursos) => {
 		if(e){
 			return res.render('showInscritos', {
 				listC: [],
@@ -230,7 +230,7 @@ app.get('/showInscritos', (req, res) => {
 });
 
 app.post('/estado', (req, res) => {
-	Curso.findOneAndUpdate({id: req.body.idC}, {est: "cerrado"}, (e, r) => {
+	Curso.findOneAndUpdate({id: req.body.idC}, {est: "Cerrado"}, (e, r) => {
 		if(e)
 			return res.render('estado', {
 				msj: e

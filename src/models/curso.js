@@ -30,7 +30,7 @@ const cursoSchema = new Schema({
 	},
 	est: {
 		type: String,
-		default: "disponible"
+		default: "Disponible"
 	}
 });
 
