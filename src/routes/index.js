@@ -4,6 +4,15 @@ const app = express ();
 const path = require('path');
 const hbs = require('hbs');
 const bcrypt = require('bcrypt');
+const multer  = require('multer');
+
+//Para usar sockets
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+
+//Email
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // Models
 const Curso = require('./../models/curso');
@@ -16,6 +25,8 @@ const directoryViews = path.join(__dirname, '../../template/views');
 
 // Helpers
 require('./../helpers/helpers')
+
+// Sockets
 
 // Hbs
 app.set('view engine', 'hbs');
@@ -30,14 +41,33 @@ app.get('/registro' , (req, res) => {
 	res.render('registro');
 });
 
-app.post('/validation', (req, res) => {
+var upload = multer({ 
+	limits: {
+		fileSize: 1000000
+	},
+	fileFilter (req, file, cb) {
+		if(!file.originalname.match(/\.(png|jpg|jpeg)$/)){
+			req.fileValidation = "Error"
+			return cb(null, false, new Error('Extensión inválida'))
+		}
+		cb(null, true)
+	}
+})
+
+app.post('/validation', upload.single('foto') ,(req, res) => {
+	if(req.fileValidation)
+		return res.render('validation', {
+				e: "Deber ser una imagen con una extensión: Jpg, Jpeg o Png"
+			}); 
+
 	let usuario = new Usuario ({
 		id: parseInt(req.body.id),
 		name: req.body.name,
 		email: req.body.email,
 		tel: req.body.tel,
 		rol: "aspirante",
-		password: bcrypt.hashSync(req.body.password, 10)
+		password: bcrypt.hashSync(req.body.password, 10),
+		foto: req.file.buffer
 	});
 
 	Usuario.find({id: usuario.id}).exec((e, asp) => {
@@ -49,12 +79,33 @@ app.post('/validation', (req, res) => {
 			return res.render('validation', {
 				e: "Error: Ya existe un usuario con esa identificación"
 			});
-		// Si no, usuario nuevo
+
+		// Usuario nuevo
+
+		// Email
+		let email = {
+			to: usuario.email,
+			from : 'cursosext.app@gmail.com',
+			subject: 'Bienvenido a CursosApp',
+			text: `Bienvenido a la página de CursosApp, aquí encontrarás todos los cursos
+					que necesitas para complementar tu vida académica y profesional`,
+			html: `
+					<br>
+					<div>
+						<img src="img/student.jpg" style="width: 100%" align="middle">
+					</div>
+					<br>
+					<br>
+					<h3>- Administración de cursosApp</h3>
+				  `
+		}
+
 		usuario.save((e, r) => {
 			if(e)
 				return res.render('validation', {
 					e: e
 				});
+		    sgMail.send(email);
 			res.render('validation', {
 				r1: "Se ha registrado su usuario",
 				r2: "Ingrese a su cuenta por favor"
@@ -95,6 +146,10 @@ app.get('/salir', (req, res) => {
 			return console.log(e)
 	});
 	res.redirect('/');
+});
+
+app.get('/chat', (req, res) => {
+	res.render('chat');
 });
 
 app.get('/createCourse', (req, res) => {

@@ -34,3 +34,50 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 input[type=number] { -moz-appearance:textfield; }
+
+/*CHAT*/
+#chat-container {
+	max-width: 600px;
+	margin: 30px auto;
+	border: 1px solid #DDD;
+	box-shadow: 1px 3px 5px rgba(0, 0, 0, .5);
+}
+
+#chat-window {
+	padding: 14px 0px;
+	margin: 0 20px;
+	border-bottom: 1px solid #E9E9E9;
+	color: #555;
+}
+
+#output p {
+	color: #555;
+	padding: 14px 0;
+	margin: 0 20px;
+}
+
+#actions p {
+	padding: 14px 0;
+	margin: 0 20px;
+	border-bottom: 1px solid #E9E9E9;
+	color: #555;
+}
+
+#chat-container input {
+	padding: 10px 20px;
+	box-sizing: border-box;
+	border: 0;
+	background: #EEE;
+	display: block;
+	width: 100%;
+}
+
+#chat-container button {
+	background: #575ED8;
+	color: #FFF;
+	font-size: 18px;
+	border: 0;
+	padding: 12px 0px;
+	width: 100%;
+	border-radius: 0 0 2px 2px;
+}

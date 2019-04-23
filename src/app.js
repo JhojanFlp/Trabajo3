@@ -7,6 +7,10 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 require('./config/config');
 
+//Para usar sockets
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+
 // Paths
 const directoryPublic = path.join(__dirname, '../public');
 const dirNode_modules = path.join(__dirname , '../node_modules');
@@ -41,7 +45,11 @@ app.use((req, res, next) => {
 	if(req.session.usuario){
 		res.locals.session = true;
 		res.locals.nombre = req.session.usuario.name;
-		res.locals.id = req.session.usuario.id
+		res.locals.id = req.session.usuario.id;
+
+		let buffer = new Buffer(req.session.usuario.foto)
+		res.locals.foto = buffer.toString('base64')
+
 		if(req.session.usuario.rol == "aspirante")
 			res.locals.rolAsp = "aspirante";
 		else if(req.session.usuario.rol == "coordinador")
@@ -53,6 +61,18 @@ app.use((req, res, next) => {
 // Routes
 app.use(require('./routes/index'));
 
+// Sockets - Chat
+io.on('connection', (client) => {
+	client.on('msj', (data, cb) => {
+		io.emit('msj', data);
+		cb();
+	})
+
+	client.on('typing', (data) => {
+		client.broadcast.emit('typing', data);
+	})
+})
+
 // Conexión de mongoose
 mongoose.connect(process.env.URLDB, {useNewUrlParser: true} , (e, r) => {
 	if(e)
@@ -60,6 +80,7 @@ mongoose.connect(process.env.URLDB, {useNewUrlParser: true} , (e, r) => {
 	return console.log('Conectado');
 });
 
-app.listen(process.env.PORT, () => {
+// app -> Sin sockets
+server.listen(process.env.PORT, () => {
 	console.log('Escuchando en el puerto ' + process.env.PORT);
 });

@@ -1,0 +1,48 @@
+{{>head}}
+
+{{>navigation}}
+
+<!-- HEADER -->
+<header id="header">
+	<div class="container mt-5">
+		{{#if session}}
+		<div class="row justify-content-center">
+			<div class="section">
+				<div class="row justify-content-center mt-3">
+					<img class="img-fluid" src="data:img/png;base64,{{foto}}" style="width: 50%">
+				</div>
+				<div class="row justify-content-center mt-3">
+					<h3>Usuario: {{nombre}}</h3>
+				</div>
+			</div>
+		</div>
+		
+		<input type="hidden" id="name" value={{nombre}}>
+		<div class="section">
+			<!-- FORM -->	
+			<div id="chat-container">
+				<input type="text" id="msj" placeholder="Escriba su mensaje" class="form-control">  		
+				<button id="enviar">Enviar</button> 
+				<div id="chat-window">
+					<div id="output"></div>
+					<div id="actions"></div>
+				</div>
+			</div>				 
+		</div>
+		{{else}}
+		<div class="section">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="alert alert-success" role="alert">
+						<div class="row justify-content-center">
+							Tiene que iniciar sesión. Regístrese si no tiene una cuenta.
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{{/if}}
+	</div>
+</header>
+
+{{>footer}}

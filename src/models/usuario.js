@@ -17,7 +17,6 @@ const usuarioSchema = new Schema({
 		type: String,
         trim: true,
         lowercase: true,
-        unique: true,
         required: true
 	},
 	tel: {
@@ -30,6 +29,10 @@ const usuarioSchema = new Schema({
 	},
 	password: {
 		type: String,
+		required: true
+	},
+	foto: {
+		type: Buffer,
 		required: true
 	}
 });
