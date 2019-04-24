@@ -47,8 +47,9 @@ app.use((req, res, next) => {
 		res.locals.nombre = req.session.usuario.name;
 		res.locals.id = req.session.usuario.id;
 
-		// let buffer = Buffer.from(req.session.usuario.foto)
+		// let buffer = Buffer.from(req.session.usuario.foto).toString('base64');
 		// res.locals.foto = buffer.toString('base64')
+		res.locals.foto = Buffer.from(req.session.usuario.foto).toString('base64');
 
 		if(req.session.usuario.rol == "aspirante")
 			res.locals.rolAsp = "aspirante";
