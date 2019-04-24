@@ -122,12 +122,13 @@ app.post('/ingresar', (req, res) => {
 			return res.render('ingresar', {e: "Datos incorrectos"});
 		// En la variable de session almacenamos todo el usuario
 		req.session.usuario = r;
+		foto = r.foto.toString('base64');
 		if(r.rol == "aspirante"){
 			res.render('ingresar', {
 				msj: "Bienvenido " + r.name + " al portal de notas.",
 				rolAsp: r.rol,
 				session: true,
-				foto: r.foto.toString('base64')
+				foto: foto
 			});
 		}
 		else if(r.rol == "coordinador"){
