@@ -81,6 +81,6 @@ mongoose.connect(process.env.URLDB, {useNewUrlParser: true} , (e, r) => {
 });
 
 // app -> Sin sockets
-server.listen(process.env.PORT, () => {
+app.listen(process.env.PORT, () => {
 	console.log('Escuchando en el puerto ' + process.env.PORT);
 });
