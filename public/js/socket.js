@@ -17,7 +17,7 @@ btn.addEventListener('click', () => {
 	})
 })
 
-msj.addEventListener('keypress', () => {
+msj.addEventListener('keyup', () => {
 	socket.emit('typing', name.value)
 })
 
