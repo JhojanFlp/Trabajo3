@@ -126,7 +126,8 @@ app.post('/ingresar', (req, res) => {
 			res.render('ingresar', {
 				msj: "Bienvenido " + r.name + " al portal de notas.",
 				rolAsp: r.rol,
-				session: true
+				session: true,
+				foto: r.foto.toString('base64')
 			});
 		}
 		else if(r.rol == "coordinador"){
