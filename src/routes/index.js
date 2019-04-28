@@ -281,6 +281,7 @@ app.get('/cursosIns' , (req, res) => {
 				Curso.findOne({id: a.idC}).exec((err, c) => {
 					if(err)
 						return res.render('cursosIns', {msj: "Error en búsqueda"});
+					console.log(c)
 					cursos.push(c)
 				});
 			});
