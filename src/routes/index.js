@@ -269,7 +269,7 @@ app.get('/cursosAll' , (req, res) => {
 	});
 });
 
-app.get('/cursosIns' , (req, res) => {
+app.get('/cursosIns' , async (req, res) => {
 	Aspirante.find({id: res.locals.id}).exec((e, aspirantes) => {
 		if(e)
 			return res.render('cursosIns', {msj: "Error en búsqueda"});
