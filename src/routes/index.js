@@ -269,23 +269,21 @@ app.get('/cursosAll' , (req, res) => {
 	});
 });
 
-app.get('/cursosIns' , async (req, res) => {
+app.get('/cursosIns' , (req, res) => {
+	let cursos = []
 	Aspirante.find({id: res.locals.id}).exec((e, aspirantes) => {
 		if(e)
 			return res.render('cursosIns', {msj: "Error en búsqueda"});
 		if(aspirantes.length == 0)
 			return res.render('cursosIns', {msj2: "No ha inscrito ningún curso"});
 		else{
-			let cursos = []
-			await aspirantes.forEach(a => {
+			aspirantes.forEach(a => {
 				Curso.findOne({id: a.idC}).exec((err, c) => {
 					if(err)
 						return res.render('cursosIns', {msj: "Error en búsqueda"});
-					console.log(c)
 					cursos.push(c)
 				});
 			});
-			console.log(cursos)
 			res.render('cursosIns', {
 				listC: cursos
 			});
