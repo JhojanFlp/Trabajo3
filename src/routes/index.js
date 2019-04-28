@@ -277,13 +277,13 @@ app.get('/cursosIns' , (req, res) => {
 		if(aspirantes.length == 0)
 			return res.render('cursosIns', {msj2: "No ha inscrito ningún curso"});
 		else{
-			aspirantes.forEach(a => {
-				Curso.findOne({id: a.idC}).exec((err, c) => {
+			// aspirantes.forEach(a => {
+				Curso.findOne({id: a[0].idC}).exec((err, c) => {
 					if(err)
 						return res.render('cursosIns', {msj: "Error en búsqueda"});
 					cursos.push(c)
 				});
-			});
+			// });
 			res.render('cursosIns', {
 				listC: cursos
 			});
