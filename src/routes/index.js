@@ -278,10 +278,10 @@ app.get('/cursosIns' , (req, res) => {
 			return res.render('cursosIns', {msj2: "No ha inscrito ningún curso"});
 		else{
 			// aspirantes.forEach(a => {
-				Curso.findOne({id: aspirantes[0].idC}).exec((err, c) => {
+				let c = aspirantes.map(a => a.idC);
+				Curso.find({id: { $in: c}}).exec((err, cursos) => {
 					if(err)
 						return res.render('cursosIns', {msj: "Error en búsqueda"});
-					cursos.push(c)
 					res.render('cursosIns', {
 						listC: cursos
 					});
