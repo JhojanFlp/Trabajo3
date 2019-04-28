@@ -282,9 +282,9 @@ app.get('/cursosIns' , (req, res) => {
 					if(err)
 						return res.render('cursosIns', {msj: "Error en búsqueda"});
 					cursos.push(c)
-					console.log(cursos)
 				});
 			});
+			console.log(cursos)
 			res.render('cursosIns', {
 				listC: cursos
 			});
