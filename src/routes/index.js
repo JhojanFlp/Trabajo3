@@ -270,9 +270,7 @@ app.get('/cursosAll' , (req, res) => {
 });
 
 app.get('/cursosIns' , (req, res) => {
-	console.log('aaaa')
 	Aspirante.find({id: res.locals.id}).exec((e, aspirantes) => {
-		console.log(aspirantes)
 		if(e)
 			return res.render('cursosIns', {msj: "Error en búsqueda"});
 		if(aspirantes.length == 0)
@@ -284,6 +282,7 @@ app.get('/cursosIns' , (req, res) => {
 					if(err)
 						return res.render('cursosIns', {msj: "Error en búsqueda"});
 					cursos.push(c)
+					console.log(cursos)
 				});
 			});
 			res.render('cursosIns', {
