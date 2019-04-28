@@ -278,10 +278,10 @@ app.get('/cursosIns' , (req, res) => {
 		else{
 			let cursos = []
 			aspirantes.forEach(a => {
-				Curso.find({id: a.idC}).exec((err, c) => {
+				Curso.findOne({id: a.idC}).exec((err, c) => {
 					if(err)
 						return res.render('cursosIns', {msj: "Error en búsqueda"});
-					cursos.push(c[0])
+					cursos.push(c)
 				});
 			});
 			res.render('cursosIns', {
