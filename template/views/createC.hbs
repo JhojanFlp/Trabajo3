@@ -3,33 +3,35 @@
 {{>navigation}}
 
 <header id="header">
-	<div class="container mt-5">
-		<div class="row">
-			<div class="col-md-6">
-				<div class="header-content-left">
-					<img src="img/student.jpg" style="width: 100%">
-				</div>
-			</div>
-			<div class="col-md-6">
-				<div class="header-content-right">
-					{{#if msj}}
-						<div class="alert alert-success" role="alert">
-							<div class="row justify-content-center">
-								{{msj}}
-							</div>
-						</div>
-					{{else}}
-						<div class="alert alert-danger" role="alert">
-							<div class="row justify-content-center">
-								{{e}}
-							</div>
-						</div>
-					{{/if}}
-					<p class="mt-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus reprehenderit porro totam nemo, neque id architecto perspiciatis illum in molestiae hic doloribus ipsam omnis qui optio laudantium sit, dolores ratione.
-					</p>
-				</div>
-			</div>
+	<div class="container">
+		<div class="text-center mt-3 mb-3">
+			<img src="img/cursos.png" style="width: 60%">
 		</div>
+		{{#if msj}}
+			<div class="d-flex justify-content-center">
+				<div class="alert alert-success" role="alert" style="width: 50%">
+					<div class="row justify-content-center">
+						{{msj}}
+					</div>
+				</div>
+			</div>
+			<div class="d-flex justify-content-center">
+				<div class="card border-success" style="width: 50%">
+					<div class="card-header">Información del curso</div>
+					<div class="card-body">
+						{{{infoCurso curso}}}
+					</div>
+				</div>
+			</div>
+		{{else}}
+			<div class="d-flex justify-content-center">
+				<div class="alert alert-danger" role="alert" style="width: 50%">
+					<div class="row justify-content-center">
+						{{e}}
+					</div>
+				</div>
+			</div>
+		{{/if}}
 	</div>
 </header>
 

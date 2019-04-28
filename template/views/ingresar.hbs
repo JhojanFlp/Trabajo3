@@ -3,46 +3,39 @@
 	{{>navigation}}
 	<header id="header">
 		<div class="container mt-5">
-			<div class="row">
-				<div class="col-md-6">
-					<div class="header-content-left">
-						<img src="img/student.jpg" style="width: 60%">
+			{{#if session}}
+				<div class="row justify-content-center mt-3 mb-3">
+					<img class="img-fluid" src="data:img/png;base64,{{foto}}">
+				</div>
+				<div class="alert alert-success" role="alert">
+					<div class="row justify-content-center">
+						<h3>{{msj}}</h3>
 					</div>
 				</div>
-				<div class="col-md-6">
-					<div class="header-content-right">
-						<div class="header-content-right">
-						{{#if msj}}
-							<div class="alert alert-success" role="alert">
-								<div class="row justify-content-center">
-									<h3>{{msj}}</h3>
-								</div>
-							</div>
-							{{#if rolAsp}}
-								<div class="row justify-content-center">
-										<h4>Ahora puede inscribirse a los cursos disponibles</h4>
-								</div>
-							{{else}}
-								{{#if rolC}}
-									<div class="row justify-content-center">
-											<h4>Ahora puede administrar los cursos</h4>
-									</div>
-								{{/if}}
-							{{/if}}
-						{{else}}
-							<div class="alert alert-danger" role="alert">
-								<div class="row justify-content-center">
-									<h3>{{e}}</h3>
-								</div>
-							</div>
-							<div class="row justify-content-center">
-									<h4>Vuelva a ingresar sus datos o registrese</h4>
-							</div>
-						{{/if}}
+				{{#if rolAsp}}
+					<div class="row justify-content-center">
+						<h4>Ahora puede inscribirse a nuestros cursos</h4>
 					</div>
+				{{else}}
+					{{#if rolC}}
+						<div class="row justify-content-center">
+							<h4>Ahora puede administrar los cursos</h4>
+						</div>
+					{{/if}}
+				{{/if}}
+			{{else}}
+				<div class="row justify-content-center mt-3 mb-3">
+					<img src="img/student.jpg" style="width: 40%">
+				</div>
+				<div class="alert alert-danger" role="alert">
+					<div class="row justify-content-center">
+						<h3>{{e}}</h3>
 					</div>
 				</div>
-			</div>
+				<div class="row justify-content-center">
+					<h4>Vuelva a ingresar sus datos o regístrese</h4>
+				</div>
+			{{/if}}
 		</div>
 	</header>
 

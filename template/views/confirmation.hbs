@@ -1,0 +1,35 @@
+{{>head}}
+
+{{>navigation}}
+
+<header>
+	<div class="section">
+		<div class="container">
+			<div class="text-center mt-2">
+				<img src="img/student.jpg" style="width: 35%">
+			</div>
+			<h1 align="center" class="mt-3 mb-3">Actualización de datos</h1>
+			{{#if e}}
+				<div class="alert alert-danger" role="alert">
+					<div class="row justify-content-center">
+						{{e}}
+					</div>
+				</div>
+			{{/if}}
+			{{#if msj}}
+				<div class="alert alert-success" role="alert">
+					<div class="row justify-content-center">
+						{{msj}}
+					</div>
+				</div>
+				<div class="alert alert-info" role="alert">
+					<div class="row justify-content-center">
+						{{adv}}
+					</div>
+				</div>
+			{{/if}}
+		</div>
+	</div>
+</header>
+
+{{>footer}}

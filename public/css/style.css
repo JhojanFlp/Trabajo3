@@ -24,6 +24,9 @@ header {
 
 footer {
 	background: #424242;
+	bottom: 0;
+	position: fixed;
+	width: 100%;
 }
 
 /*Quitar flecha en el input de tipo number*/

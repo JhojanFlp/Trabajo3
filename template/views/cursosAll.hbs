@@ -6,15 +6,27 @@
 	<section>
 		<div class="container mt-5">
 			<div class="row justify-content-center">
-				<p class="h2 mt-2 mb-5">
-					Cursos disponibles
+				<p class="h2 mt-2 mb-3">
+					Cursos registrados
 				</p>
 			</div>
 			<div class="row justify-content-center">
-				<p class="h4">
-					{{msj}}
+				{{#if msj}}
+					<div class="alert alert-danger" role="alert">
+						<div class="row justify-content-center">
+							{{msj}}
+						</div>
+					</div>
+				{{/if}}
+				{{#if msj2}}
+					<div class="alert alert-danger" role="alert">
+						<div class="row justify-content-center">
+							{{msj2}}
+						</div>
+					</div>
+				{{else}}
 					{{{listarCursos listC}}}
-				</p>
+				{{/if}}
 			</div>
 		</div>
 	</section>

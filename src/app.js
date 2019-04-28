@@ -44,8 +44,10 @@ app.use(session({
 app.use((req, res, next) => {
 	if(req.session.usuario){
 		res.locals.session = true;
-		res.locals.nombre = req.session.usuario.name;
 		res.locals.id = req.session.usuario.id;
+		res.locals.nombre = req.session.usuario.name;
+		res.locals.email = req.session.usuario.email;
+		res.locals.tel = req.session.usuario.tel;
 		res.locals.foto = Buffer.from(req.session.usuario.foto).toString('base64');
 
 		if(req.session.usuario.rol == "aspirante")

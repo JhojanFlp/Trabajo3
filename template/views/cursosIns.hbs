@@ -7,18 +7,25 @@
 		<div class="text-center mt-3 mb-4">
 			<img src="img/cursos.png" style="width: 60%">
 		</div>
-		{{#if e}}
+		{{#if msj}}
 			<div class="alert alert-danger" role="alert">
-				<div class="row justify-content-center">
-					{{e}}
-				</div>
-			</div>
-		{{else}}
-			<div class="alert alert-success" role="alert">
 				<div class="row justify-content-center">
 					{{msj}}
 				</div>
 			</div>
+		{{/if}}
+		{{#if msj2}}
+			<div class="alert alert-danger" role="alert">
+				<div class="row justify-content-center">
+					{{msj2}}
+				</div>
+			</div>
+			<p class="mt-3 text-center"><a href="/cursos">Incribirse a un curso</a></p>
+		{{else}}
+			<div class="row justify-content-center">
+				{{{listarCursos listC}}}
+			</div>
+			
 		{{/if}}
 	</div>
 </header>

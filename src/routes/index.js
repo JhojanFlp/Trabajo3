@@ -6,13 +6,13 @@ const hbs = require('hbs');
 const bcrypt = require('bcrypt');
 const multer  = require('multer');
 
-//Para usar sockets
+// Para usar sockets
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
-//Email
-const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+// Email
+// const sgMail = require('@sendgrid/mail');
+// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // Models
 const Curso = require('./../models/curso');
@@ -83,32 +83,31 @@ app.post('/validation', upload.single('foto') ,(req, res) => {
 		// Usuario nuevo
 
 		// Email
-		let email = {
-			to: usuario.email,
-			from : 'cursosext.app@gmail.com',
-			subject: 'Bienvenido a CursosApp',
-			text: `Bienvenido a la página de CursosApp, aquí encontrarás todos los cursos
-					que necesitas para complementar tu vida académica y profesional`,
-			html: `
-					<br>
-					<div>
-						<img src="img/student.jpg" style="width: 100%" align="middle">
-					</div>
-					<br>
-					<br>
-					<h3>- Administración de cursosApp</h3>
-				  `
-		}
-
+		// let email = {
+		// 	to: usuario.email,
+		// 	from : 'cursosext.app@gmail.com',
+		// 	subject: 'Bienvenido a CursosApp',
+		// 	text: `Bienvenido a la página de CursosApp, aquí encontrarás todos los cursos
+		// 			que necesitas para complementar tu vida académica y profesional`,
+		// 	html: `
+		// 			<br>
+		// 			<div>
+		// 				<img src="img/student.jpg" style="width: 100%" align="middle">
+		// 			</div>
+		// 			<br>
+		// 			<br>
+		// 			<h3>- Administración de cursosApp</h3>
+		// 		  `
+		// }
+		
 		usuario.save((e, r) => {
 			if(e)
 				return res.render('validation', {
-					e: e
+					e: "Error al guardar el usuario"
 				});
-		    sgMail.send(email);
+		    // sgMail.send(email);
 			res.render('validation', {
-				r1: "Se ha registrado su usuario",
-				r2: "Ingrese a su cuenta por favor"
+				msj: "Se ha registrado su usuario, ingrese a su cuenta por favor"
 			});
 		});
 	});
@@ -124,18 +123,64 @@ app.post('/ingresar', (req, res) => {
 		req.session.usuario = r;
 		if(r.rol == "aspirante"){
 			res.render('ingresar', {
-				msj: "Bienvenido " + r.name + " al portal de notas.",
+				msj: "Bienvenido " + r.name + " a CursosApp.",
 				rolAsp: r.rol,
+				foto: r.foto.toString('base64'),
 				session: true
 			});
 		}
 		else if(r.rol == "coordinador"){
 			res.render('ingresar', {
-				msj: "Bienvenido " + r.name + " al portal de notas.",
+				msj: "Bienvenido " + r.name + " a CursosApp.",
 				rolC: r.rol,
+				foto: r.foto.toString('base64'),
 				session: true
 			});
 		}
+	});
+});
+
+app.get('/edit' , (req, res) => {
+	res.render('edit')
+});
+
+app.post('/edit', upload.single('foto'), (req, res) => {
+	if(req.fileValidation)
+		return res.render('confirmation', {
+				e: "Deber ser una imagen con una extensión: Jpg, Jpeg o Png"
+			});
+
+	Usuario.findOne({id: req.body.id}, (e, r) => {
+		if(e)
+			return res.render('confirmation', {e: "Error de búsqueda de usuario"});
+		if((!r) || (!bcrypt.compareSync(req.body.password, r.password)))
+			return res.render('confirmation', {e: "Datos incorrectos"});
+
+		// Update Usuario
+		let aux
+		Usuario.findOneAndUpdate({id: req.body.id}, 
+			{$set: {name: req.body.name, email: req.body.email, tel: req.body.tel, foto: req.file.buffer}}, (e, r) => {
+				if(e)
+					return res.render('confirmation', {e: "Error de búsqueda y actualización de usuario"});
+		})
+
+		// Update Aspirantes
+		Aspirante.updateMany({id: req.body.id}, 
+			{$set: {name: req.body.name, email: req.body.email, tel: req.body.tel}}, (e, r) => {
+				if(e)
+					return res.render('confirmation', {e: "Error de actualización en los cursos a los que aspira"});
+		});
+
+		// Update session
+		Usuario.findOne({id: req.body.id}).exec((e, r) => {
+			if(e)
+					return res.render('confirmation', {e: "Error de búsqueda de usuario"});
+			req.session.usuario = r;
+			res.render('confirmation', {
+				msj: "Sus datos han sido actualizados",
+				adv: "¡Es posible que tenga que volver a iniciar sesión para ver sus cambios efectuados!"
+			});
+		});
 	});
 });
 
@@ -170,7 +215,7 @@ app.post('/createC', (req, res) => {
 	Curso.find({id: curso.id}).exec((e, c) => {
 		if(e){
 			return res.render('createC', {
-				e: e
+				e: "Error en la búsqueda de cursos"
 			});
 		}
 		if(c.length != 0){
@@ -182,10 +227,11 @@ app.post('/createC', (req, res) => {
 		curso.save((e, r) => {
 			if(e)
 				return res.render('createC', {
-					e: e
+					e: "Error al guardar el curso"
 				});
 			res.render('createC', {
-				msj: "El curso: " + r.name + " fue creado satisfactoriamete"
+				msj: "El curso " + r.name + " fue creado satisfactoriamete",
+				curso: curso
 			});
 		});
 	});
@@ -213,9 +259,35 @@ app.get('/cursosAll' , (req, res) => {
 				msj: "Error en la búsqueda"
 			});
 		}
+		if(cursos.length == 0)
+			return res.render('cursosAll', {
+				msj2: "No hay cursos registrados"
+			});
 		res.render('cursosAll', {
 			listC: cursos
 		});
+	});
+});
+
+app.get('/cursosIns' , (req, res) => {
+	Aspirante.find({id: res.locals.id}).exec((e, aspirantes) => {
+		if(e)
+			return res.render('cursosIns', {msj: "Error en búsqueda"});
+		if(aspirantes.length == 0)
+			return res.render('cursosIns', {msj2: "No ha inscrito ningún curso"});
+		else{
+			let cursos = []
+			aspirantes.forEach(a => {
+				Curso.findOne({id: a.idC}).exec((err, c) => {
+					if(err)
+						return res.render('cursosIns', {msj: "Error en búsqueda"});
+					cursos.push(c)
+				});
+			});
+			res.render('cursosIns', {
+				listC: cursos
+			});
+		}
 	});
 });
 
@@ -301,7 +373,7 @@ app.post('/delete', (req, res) => {
 	Aspirante.findOneAndDelete({id: req.body.idA, idC: req.body.idC}, (e, r) => {
 		if(e)
 			return res.render('delete', {
-				msj: e
+				msj: "Error en búsqueda y eliminación en la BD"
 			});
 		Aspirante.find({idC: req.body.idC}).exec((er, list) => {
 			if(er){
@@ -310,10 +382,17 @@ app.post('/delete', (req, res) => {
 					msj: "Error: No se puede mostrar la tabla"
 				});
 			}
+
+			if(list.length == 0)
+				return res.render('delete', {
+					msj: "La persona con id: " + r.id + " ha sido eliminado del curso con id: " + r.idC,
+					adv: "¡Ya no hay aspirantes para este curso!"
+				});
+
 			res.render('delete', {
-				msj: "La persona con id: " + r.id + " ha sido eliminado del curso con id: " + r.idC,
-				listA: list
-			});
+					msj: "La persona con id: " + r.id + " ha sido eliminado del curso con id: " + r.idC,
+					listA: list
+				});
 		});
 	});
 });

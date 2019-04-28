@@ -1,5 +1,25 @@
 const hbs = require('hbs');
 
+// Información de un curso
+hbs.registerHelper('infoCurso', c => {
+	let auxInt
+	if(c.int == null)
+		auxInt = "-"
+	else
+		auxInt = c.int
+	let txt = 
+		`
+		<h5 class="card-title">- Nombre: ${c.name}</h5>
+		<p class="card-text">- Código: ${c.id}</p>
+		<p class="card-text">- Descripción: ${c.desc}</p>
+		<p class="card-text">- Valor: ${c.valor} $</p>
+		<p class="card-text">- Modalidad: ${c.mod}</p>
+		<p class="card-text">- Intensidad: ${auxInt} horas</p>
+		<p class="card-text">- Estado: ${c.est}</p>
+		`
+	return txt
+});
+
 // Cursos disponibles
 hbs.registerHelper('listarCursosDisp', (list, session, id) => {
 	let txt = 'No hay cursos disponibles';
@@ -76,7 +96,7 @@ hbs.registerHelper('listarCursos', (list) => {
 		txt =
 			`
 			<div class="row">
-				<table class="table table-striped">
+				<table class="table table-striped table-bordered">
 					<thead class="thead-dark">
 						<tr>
 							<th scope="col">Id</th>
@@ -103,7 +123,7 @@ hbs.registerHelper('listarCursos', (list) => {
 					<th scope="row">${c.id}</th>
 					<td>${c.name}</td>
 					<td>${c.desc}</td>
-					<td>${c.valor}</td>
+					<td>${c.valor} $</td>
 					<td>${c.mod}</td>
 					<td>${auxInt}</td>
 					<td>${c.est}</td>
@@ -120,9 +140,6 @@ hbs.registerHelper('listarCursos', (list) => {
 	return txt;
 });
 
-// hbs.registerHelper('deleteAsp', (idA, idC) => 
-// 	funciones.deleteAsp(idA, idC));
-
 // Aspiantes por cada curso
 hbs.registerHelper('listarAspirantes', (listC, listA) => {
 	let txt = 'No hay cursos disponibles';
@@ -131,7 +148,7 @@ hbs.registerHelper('listarAspirantes', (listC, listA) => {
 		listC.forEach((c, i) => {
 			txt += 
 				`
-				<div class="card">
+				<div class="card text-center">
 					<div class="card-header" id="heading${i + 1}">
 						<h2 class="mb-0">
 							<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse${i + 1}" aria-expanded="true" aria-controls="collapse${i + 1}">
@@ -214,9 +231,10 @@ hbs.registerHelper('listarAspirantes', (listC, listA) => {
 });
 
 hbs.registerHelper('listarAspCurso', (listA) => {
+	let txt
 	txt = 
 		`
-		<table class="table table-striped">
+		<table class="table table-striped" style="width: 60%">
 			<thead class="thead-dark">
 				<tr>
 					<th scope="col">#</th>
@@ -228,39 +246,25 @@ hbs.registerHelper('listarAspCurso', (listA) => {
 			</thead>
 			<tbody>
 		`
-	if(listA.length != 0){
-		listA.forEach((a, i) => {
-			txt += 
-			`
-			<tr>
-				<th scope="row">${i + 1}</th>
-				<td>${a.name}</td>
-				<td>${a.id}</td>
-				<td>${a.email}</td>
-				<td>${a.tel}</td>
-			</tr>
-			`
-		});
-	}
-	else {
+	listA.forEach((a, i) => {
 		txt += 
-			`
-			<tr>
-				<th scope="row">Error:</td>
-				<td></td>
-				<td>504</td>
-				<td>No hay aspirantes para este curso</td>
-				</td>
-			</tr>
-			`
-	}
+		`
+		<tr>
+			<th scope="row">${i + 1}</th>
+			<td>${a.name}</td>
+			<td>${a.id}</td>
+			<td>${a.email}</td>
+			<td>${a.tel}</td>
+		</tr>
+		`
+	});
 
 	txt += 
-	`			</tbdody>
-			</table>
-		</div>
-	</div>
-	`
+		`			
+			</tbdody>
+		</table>
+		`
+	
 	return txt;
 });
 
