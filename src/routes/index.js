@@ -270,6 +270,7 @@ app.get('/cursosAll' , (req, res) => {
 });
 
 app.get('/cursosIns' , (req, res) => {
+	console.log('aaaa')
 	Aspirante.find({id: res.locals.id}).exec((e, aspirantes) => {
 		console.log(aspirantes)
 		if(e)
