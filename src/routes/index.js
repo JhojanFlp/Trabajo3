@@ -277,19 +277,15 @@ app.get('/cursosIns' , (req, res) => {
 		if(aspirantes.length == 0)
 			return res.render('cursosIns', {msj2: "No ha inscrito ningún curso"});
 		else{
-			// aspirantes.forEach(a => {
-				let c = aspirantes.map(a => a.idC);
-				Curso.find({id: { $in: c}}).exec((err, cursos) => {
-					if(err)
-						return res.render('cursosIns', {msj: "Error en búsqueda"});
-					res.render('cursosIns', {
-						listC: cursos
-					});
+			//Array de idC's
+			let c = aspirantes.map(a => a.idC);
+			Curso.find({id: { $in: c}}).exec((err, cursos) => {
+				if(err)
+					return res.render('cursosIns', {msj: "Error en búsqueda"});
+				res.render('cursosIns', {
+					listC: cursos
 				});
-			// });
-			// res.render('cursosIns', {
-			// 	listC: cursos
-			// });
+			});
 		}
 	});
 });
