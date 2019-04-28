@@ -277,7 +277,7 @@ app.get('/cursosIns' , async (req, res) => {
 			return res.render('cursosIns', {msj2: "No ha inscrito ningún curso"});
 		else{
 			let cursos = []
-			aspirantes.forEach(a => {
+			await aspirantes.forEach(a => {
 				Curso.findOne({id: a.idC}).exec((err, c) => {
 					if(err)
 						return res.render('cursosIns', {msj: "Error en búsqueda"});
